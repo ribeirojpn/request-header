@@ -2,7 +2,7 @@ var http = require('http');
 var regex = /(\(.*?\))/;
 http.createServer(function (req,res) {
   var info = {
-    ipaddress: req.connection.remoteAddress.split(/[ffff]|\:/).join(''),
+    ipaddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(/[ffff]|\:/).join(''),
     language: req.headers["accept-language"].split(",")[0],
     software: regex.exec(req.headers["user-agent"])[0].split(/\(|\)/gi).join('')
   };
